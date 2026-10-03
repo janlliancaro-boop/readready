@@ -1,8 +1,4 @@
 <?php
 require __DIR__ . '/../includes/config.php';
 
-if (is_admin_logged_in()) {
-    redirect('/admin/dashboard.php');
-}
-
 redirect('/admin/login.php');

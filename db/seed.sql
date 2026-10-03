@@ -6,40 +6,31 @@ INSERT IGNORE INTO avatars (id, avatar_name, emoji) VALUES
 (5, 'lion', '🦁'),
 (6, 'bunny', '🐰');
 
-INSERT IGNORE INTO learners (id, nickname, avatar_id, current_level) VALUES
-(1, 'Sunny', 1, 'Beginner');
+INSERT IGNORE INTO dictionary_categories (id, name, description, icon, display_order) VALUES
+(1, 'Animals', 'Learn about friendly pets and wild animals.', '🐶', 1),
+(2, 'Fruits', 'Healthy fruits and tasty treats.', '🍎', 2),
+(3, 'Vegetables', 'Fresh vegetables and their colors.', '🥕', 3),
+(4, 'Colors', 'Primary and secondary colors.', '🎨', 4),
+(5, 'School Objects', 'School tools and classroom items.', '📚', 5),
+(6, 'Body Parts', 'Names for parts of the body.', '👀', 6),
+(7, 'Transportation', 'Ways to travel every day.', '🚗', 7);
 
-INSERT IGNORE INTO dictionary_categories (id, name, description) VALUES
-(1, 'Animals', 'Animals and pets'),
-(2, 'Fruits', 'Tasty fruits to learn'),
-(3, 'Vegetables', 'Healthy vegetables'),
-(4, 'Colors', 'Color names and shades'),
-(5, 'Body Parts', 'Parts of the body'),
-(6, 'School Objects', 'Things in a classroom'),
-(7, 'Transportation', 'Ways to travel');
-
-INSERT IGNORE INTO dictionary_words (id, word, definition, example_sentence, image_url, category_id) VALUES
-(1, 'Apple', 'A round fruit that is crisp and sweet.', 'The apple is red and juicy.', NULL, 2),
-(2, 'Dog', 'An animal that barks and plays with people.', 'The dog wags its tail.', NULL, 1),
-(3, 'Carrot', 'A long orange vegetable that grows underground.', 'Carrots are good for our eyes.', NULL, 3),
-(4, 'Blue', 'The color of the sky and ocean.', 'The sky is blue today.', NULL, 4),
-(5, 'Eyes', 'The organs we use to see.', 'I blink my eyes when the light is bright.', NULL, 5),
-(6, 'Book', 'A set of pages for reading.', 'I read my book before bed.', NULL, 6),
-(7, 'Bus', 'A large vehicle used to carry many people.', 'The bus takes us to school.', NULL, 7),
-(8, 'Sun', 'The star that gives light and warmth to Earth.', 'The sun shines brightly in the morning.', NULL, 2);
-
-INSERT IGNORE INTO word_audio (id, word_id, audio_url) VALUES
-(1, 1, 'assets/audio/apple.mp3'),
-(2, 2, 'assets/audio/dog.mp3'),
-(3, 3, 'assets/audio/carrot.mp3'),
-(4, 4, 'assets/audio/blue.mp3');
+INSERT IGNORE INTO dictionary_words (id, word, definition, example_sentence, image_url, audio_url, category_id) VALUES
+(1, 'Apple', 'A round fruit that is crisp and sweet.', 'The apple is red and juicy.', '🍎', NULL, 2),
+(2, 'Dog', 'An animal that barks and plays with people.', 'The dog runs in the park.', '🐶', NULL, 1),
+(3, 'Carrot', 'A long orange vegetable that grows underground.', 'Carrots are good for our eyes.', '🥕', NULL, 3),
+(4, 'Blue', 'The color of the sky and ocean.', 'The sky is blue today.', '🔵', NULL, 4),
+(5, 'Book', 'A set of pages for reading.', 'I read my book before bed.', '📘', NULL, 5),
+(6, 'Eyes', 'The organs used to see.', 'My eyes are bright and happy.', '👀', NULL, 6),
+(7, 'Bus', 'A vehicle used to carry many people.', 'The bus takes us to school.', '🚌', NULL, 7),
+(8, 'Sun', 'The star that gives us light and warmth.', 'The sun shines brightly in the morning.', '☀️', NULL, 2);
 
 INSERT IGNORE INTO lessons (id, title, lesson_type, description, difficulty) VALUES
-(1, 'Alphabet Adventure', 'alphabet', 'Learn the letters A to Z with sound and picture matching.', 'Beginner'),
-(2, 'Shape Safari', 'shape', 'Identify shapes and their names.', 'Beginner'),
-(3, 'Count and Match', 'numbers', 'Recognize and match numbers from 1 to 100.', 'Intermediate'),
-(4, 'Math Journey', 'math', 'Practice basic addition and subtraction.', 'Intermediate'),
-(5, 'Word Builder', 'words', 'Build sight words and missing letter patterns.', 'Advanced');
+(1, 'Alphabet Adventure', 'alphabet', 'Learn A to Z with pictures and sounds.', 'Beginner'),
+(2, 'Shape Safari', 'shape', 'Recognize circles, squares, triangles and more.', 'Beginner'),
+(3, 'Count and Match', 'numbers', 'Count, compare, and match numbers confidently.', 'Intermediate'),
+(4, 'Math Journey', 'math', 'Practice addition, subtraction, greater than and less than.', 'Intermediate'),
+(5, 'Word Builder', 'words', 'Build words with missing letters and picture cues.', 'Advanced');
 
 INSERT IGNORE INTO lesson_categories (id, lesson_id, category_name) VALUES
 (1, 1, 'Alphabet'),
@@ -61,36 +52,28 @@ INSERT IGNORE INTO quiz_questions (id, quiz_id, question_text, option_a, option_
 (4, 3, 'What is 5 + 3?', '7', '8', '9', '10', '8', 'multiple_choice'),
 (5, 4, 'Which word means a place to read?', 'Book', 'Door', 'Window', 'Chair', 'Book', 'multiple_choice');
 
-INSERT IGNORE INTO quiz_results (id, learner_id, quiz_id, score, total_questions, percentage) VALUES
-(1, 1, 1, 4, 5, 80.00),
-(2, 1, 3, 3, 5, 60.00);
-
 INSERT IGNORE INTO spelling_words (id, word, hint, difficulty) VALUES
-(1, 'apple', 'A sweet red or green fruit.', 'Beginner'),
-(2, 'planet', 'A big object in space.', 'Intermediate'),
-(3, 'friend', 'Someone you like and trust.', 'Beginner');
+(1, 'apple', 'A sweet fruit that can be red or green.', 'Beginner'),
+(2, 'planet', 'A huge object in space.', 'Intermediate'),
+(3, 'friend', 'Someone you enjoy spending time with.', 'Beginner');
 
 INSERT IGNORE INTO word_puzzles (id, scrambled_word, answer_word, clue, difficulty) VALUES
 (1, 'LEPNA', 'APPLE', 'A fruit that is often red or green.', 'Beginner'),
-(2, 'SNAH', 'HANS', 'A name used for a friend or classmate.', 'Intermediate');
+(2, 'HANS', 'SHAN', 'A word used in the phrase "Happy ___".', 'Intermediate');
 
-INSERT IGNORE INTO achievements (id, name, description, icon, reward_points) VALUES
-(1, 'Alphabet Explorer', 'Completed the alphabet learning path.', '🏅', 25),
-(2, 'Number Master', 'Recognized numbers and counted confidently.', '🔢', 30),
-(3, 'Shape Genius', 'Mastered shape recognition.', '🔺', 25),
-(4, 'Vocabulary Hero', 'Learned many new words.', '📚', 40),
-(5, 'Quiz Champion', 'Won a quiz challenge.', '🏆', 45),
-(6, 'Spelling Star', 'Spelled words correctly.', '✨', 35);
+INSERT IGNORE INTO badges (id, name, description, icon, requirement, stars_reward) VALUES
+(1, 'Alphabet Explorer', 'Completed alphabet activities and letter recognition tasks.', '🏅', 'Complete all alphabet activities.', 25),
+(2, 'Number Master', 'Recognized and counted numbers confidently.', '🔢', 'Complete number recognition and counting tasks.', 30),
+(3, 'Shape Genius', 'Identified and matched common shapes.', '🔺', 'Complete shape recognition activities.', 25),
+(4, 'Vocabulary Hero', 'Learned a variety of useful words.', '📚', 'Learn required vocabulary words.', 40),
+(5, 'Quiz Champion', 'Reached a strong quiz score.', '🏆', 'Reach a required quiz score.', 45),
+(6, 'Spelling Star', 'Spelled words correctly in challenge mode.', '✨', 'Reach required spelling score.', 35);
 
-INSERT IGNORE INTO rewards (id, learner_id, stars, coins, trophies) VALUES
-(1, 1, 245, 320, 7);
+INSERT IGNORE INTO rewards (id, name, description, icon, stars_award, coins_award, trophy_award) VALUES
+(1, 'Starter Reward', 'First-time learner reward for beginning your journey.', '⭐', 25, 10, 1),
+(2, 'Vocabulary Reward', 'Awarded after learning more vocabulary.', '🏆', 50, 20, 2),
+(3, 'Learning Legend', 'Top milestone reward for consistent effort.', '🎖️', 100, 40, 3);
 
-INSERT IGNORE INTO learner_progress (id, learner_id, lesson_id, progress_percent, lessons_completed, words_learned, activities_completed) VALUES
-(1, 1, 1, 78, 8, 18, 12),
-(2, 1, 2, 65, 6, 14, 10),
-(3, 1, 4, 72, 7, 12, 9);
+INSERT IGNORE INTO admins (id, username, password_hash, full_name, role, status) VALUES
+(1, 'admin', '$2y$10$P3GfZT8XjGvU4z.sv3U5L.wKBlZKOWPD.3fJ8QZw1r6Qf/RrK3/r2', 'System Administrator', 'super_admin', 'active');
 
-INSERT IGNORE INTO activity_logs (id, learner_id, activity_name, activity_type, session_data) VALUES
-(1, 1, 'Alphabet Learning', 'lesson', '{"module":"alphabet","score":86}'),
-(2, 1, 'Dictionary Search', 'search', '{"word":"apple","search_count":2}'),
-(3, 1, 'Quiz Challenge', 'quiz', '{"quiz_id":1,"score":80}');

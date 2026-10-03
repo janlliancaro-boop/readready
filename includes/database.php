@@ -3,7 +3,7 @@ require_once __DIR__ . '/config.php';
 
 class Database
 {
-    private $conn;
+    private mysqli $conn;
 
     public function __construct()
     {
@@ -21,12 +21,12 @@ class Database
         $this->seedData();
     }
 
-    public function getConnection()
+    public function getConnection(): mysqli
     {
         return $this->conn;
     }
 
-    private function initializeSchema()
+    private function initializeSchema(): void
     {
         $schemaPath = __DIR__ . '/../db/schema.sql';
         if (!file_exists($schemaPath)) {
@@ -46,15 +46,17 @@ class Database
         } while ($this->conn->next_result());
     }
 
-    private function seedData()
+    private function seedData(): void
     {
         $seedPath = __DIR__ . '/../db/seed.sql';
         if (!file_exists($seedPath)) {
+            $this->ensureDefaultAdmin();
             return;
         }
 
         $seedSql = file_get_contents($seedPath);
         if ($seedSql === false || trim($seedSql) === '') {
+            $this->ensureDefaultAdmin();
             return;
         }
 
@@ -64,5 +66,31 @@ class Database
                 $result->free();
             }
         } while ($this->conn->next_result());
+
+        $this->ensureDefaultAdmin();
+    }
+
+    private function ensureDefaultAdmin(): void
+    {
+        $check = $this->conn->prepare('SELECT id FROM admins WHERE username = ? LIMIT 1');
+        $check->bind_param('s', $username);
+        $username = ADMIN_DEFAULT_USERNAME;
+        $check->execute();
+        $result = $check->get_result();
+
+        if ($result && $result->num_rows > 0) {
+            $check->close();
+            return;
+        }
+        $check->close();
+
+        $passwordHash = password_hash(ADMIN_DEFAULT_PASSWORD, PASSWORD_DEFAULT);
+        $stmt = $this->conn->prepare('INSERT INTO admins (username, password_hash, full_name, role, status) VALUES (?, ?, ?, ?, ?)');
+        $fullName = 'System Administrator';
+        $role = 'super_admin';
+        $status = 'active';
+        $stmt->bind_param('sssss', ADMIN_DEFAULT_USERNAME, $passwordHash, $fullName, $role, $status);
+        $stmt->execute();
+        $stmt->close();
     }
 }

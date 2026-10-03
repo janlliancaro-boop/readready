@@ -1,0 +1,19 @@
+<?php
+require __DIR__ . '/../includes/config.php';
+require __DIR__ . '/../includes/database.php';
+
+if (!is_learner_logged_in()) {
+    redirect('/index.php');
+}
+
+$conn = (new Database())->getConnection();
+$learnerId = (int) $_SESSION['learner_id'];
+$log = $conn->prepare('INSERT INTO learner_activities (learner_id, activity_name, activity_type, session_data) VALUES (?, ?, ?, ?)');
+$activityName = 'Dashboard Visit';
+$activityType = 'view';
+$sessionData = '{"page":"dashboard"}';
+$log->bind_param('isss', $learnerId, $activityName, $activityType, $sessionData);
+$log->execute();
+$log->close();
+
+redirect('/dashboard.php');
